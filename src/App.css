@@ -9,29 +9,29 @@ body{
 }
 
 nav{
-  display: flex;
-  text-align: center;
+  
+  text-align: right;
   background-color: #5d449e;
-  width: 100%;
+  
   padding: 20px;
   color: #f8f8f8;
   
 }
 .content {
-  padding: 0.5em;
+  padding: 1em;
   margin: 0 auto;
   max-width: 600px;
   font-size: 1.2rem;
   line-height: 1.1;
-  height: 90vh;
+  
 }
 
 .dark-theme{
-  background-color: #3c305a;
+  background-color: #241e33;
   color: #ffffff;
 }
 
 .dark-theme nav{
-  background-color:#463868;
+  background-color:#332650;
   color: #ffffff;
 }
