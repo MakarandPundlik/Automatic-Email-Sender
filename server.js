@@ -6,12 +6,37 @@ const bodyparser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin:true,
+     credentials:true
+   }));
+   
 //deprecation warning
 app.use(bodyparser.urlencoded({
     extended:true
 }));
 app.use(bodyparser.json());
+
+const port = process.env.port||3001;
+app.listen(port,()=>console.log(`listening to the port ${port}...`));
+
+//setting up the nodemailer
+const contactEmail = nodemailer.createTransport({
+    service:'gmail',
+    host:"blogpost.example.com",
+    port:465,
+    secure:true,
+   auth:{
+      user:"",
+      pass:""
+   }
+});
+
+contactEmail.verify((error)=>{
+    if(!error) console.log("Ready to send...");
+    else console.log(error);
+});
+
 
 //listen to the request
 app.use("/",router);
@@ -26,27 +51,25 @@ router.use((req,res,next)=>{
     next();
 });
 
+
+
 router.post("/contact",(req,res)=>{
-    const {name,email} = req.body;
-    return res.json({name,email});
+    const {email,name} = req.body;
+    console.log(req.body);
+    const mail = {
+        from:"blogpost.example@gmail.com",
+        to:email,
+        subject:"Welcome to BlogPost community ",
+        html:`<p>Welcome to BlogPost community <h3>${name}</h3></p>`
+    }
+
+    contactEmail.sendMail(mail,(err)=>{
+        if(!err) {
+            console.log("Email sent successfully...");
+            console.log(process.env.user,process.env.pass);
+            return res.json({name,email});
+        }
+        else console.log(err);
+    })
+    //return res.json({msg:"something went wrong"});
 });
-
-const port = process.env.port||3001;
-app.listen(port,()=>console.log(`listening to the port ${port}...`));
-
-//setting up the nodemailer
-const contactEmail = nodemailer.createTransport({
-    service:'gmail',
-    host:"xyx",
-    port:465,
-    secure:true,
-   auth:{
-      user:"xyz@gmail.com",
-      pass:"xyz"
-   }
-});
-
-contactEmail.verify((error)=>{
-    if(!error) console.log("Ready to send");
-    else console.log(error);
-})
