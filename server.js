@@ -3,6 +3,7 @@ const cors = require('cors');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const bodyparser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
@@ -35,7 +36,17 @@ app.listen(port,()=>console.log(`listening to the port ${port}...`));
 
 //setting up the nodemailer
 const contactEmail = nodemailer.createTransport({
-    host:"blog.post.com",
-    port:587,
-   
+    service:'gmail',
+    host:"xyx",
+    port:465,
+    secure:true,
+   auth:{
+      user:"xyz@gmail.com",
+      pass:"xyz"
+   }
+});
+
+contactEmail.verify((error)=>{
+    if(!error) console.log("Ready to send");
+    else console.log(error);
 })
