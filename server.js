@@ -15,9 +15,27 @@ app.use(bodyparser.json());
 //listen to the request
 app.use("/",router);
 
+//setting up the headers
+router.use((req,res,next)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    res.header('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version,Set-Cookie, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
+   res.header("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS"); 
+   res.header("Content-Type","application/json");
+   res.header("Access-Control-Allow-Credentials", true);
+    next();
+});
+
 router.post("/contact",(req,res)=>{
     const {name,email} = req.body;
     return res.json({name,email});
 });
+
 const port = process.env.port||3001;
 app.listen(port,()=>console.log(`listening to the port ${port}...`));
+
+//setting up the nodemailer
+const contactEmail = nodemailer.createTransport({
+    host:"blog.post.com",
+    port:587,
+   
+})
