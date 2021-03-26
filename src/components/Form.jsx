@@ -33,7 +33,7 @@ function Form(props) {
             <form onSubmit={(e)=>handleSubmit(e)}>
                 <div className="mb-3">
                     <label  className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email1"  onChange={(e)=>handleChange(e)}/>
+                    <input type="email" className="form-control" id="email"  onChange={(e)=>handleChange(e)}/>
                    
                 </div>
                 <div className="mb-3">
