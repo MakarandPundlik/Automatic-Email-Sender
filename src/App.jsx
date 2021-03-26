@@ -11,6 +11,7 @@ function App() {
 
   useEffect(()=>{
     localStorage.setItem('dark',JSON.stringify(darkTheme));
+    document.body.style.backgroundColor=darkTheme?"#241e33":"#ffffff";
   },[darkTheme]);
 
   
@@ -18,14 +19,12 @@ function App() {
     <div className={darkTheme?"dark-theme":"light-theme"}>
       
      <nav>
-      
-         <div  onClick={()=>setDarkTheme(prevTheme=>!prevTheme)}>
+         <div onClick={()=>setDarkTheme(prevTheme=>!prevTheme)}>
            {darkTheme?
            <ion-icon name="sunny-sharp" size="large"></ion-icon>
            :<ion-icon size="large" name="moon-sharp"></ion-icon>}
          </div>
-       
-     </nav>
+      </nav>
       <div className="content">
         <Form/>
       </div>

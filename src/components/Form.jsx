@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-
+import axios from 'axios';
 function Form(props) {
     const [state,setState] = useState({
         email:'',
@@ -12,12 +12,24 @@ function Form(props) {
         })
     }
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
         e.preventDefault();
         console.log(state);
+        await axios.post("http://localhost:3001/contact",{
+            email:state.email,
+            name:state.name
+        },{
+            headers:{
+                "accept":"application/json",
+                "Content-Type":"application/json",
+                "Access-Control-Allow-Origin":"*"
+            }
+        })
+        .then((res)=>console.log(res.data))
+        .catch((err)=>console.log(err));
     }
     return (
-        <div>
+       
             <form onSubmit={(e)=>handleSubmit(e)}>
                 <div className="mb-3">
                     <label  className="form-label">Email address</label>
@@ -31,7 +43,7 @@ function Form(props) {
 
                 <button type="submit" className="btn btn-light" onSubmit={(e)=>handleSubmit(e)}>Submit</button>
             </form>
-        </div>
+       
     );
 }
 
