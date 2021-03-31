@@ -66,7 +66,7 @@ router.post("/contact",(req,res)=>{
     contactEmail.sendMail(mail,(err)=>{
         if(!err) {
             console.log("Email sent successfully...");
-            console.log(process.env.user,process.env.pass);
+           // console.log(process.env.user,process.env.pass);
             return res.json({name,email});
         }
         else console.log(err);
